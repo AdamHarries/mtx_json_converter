@@ -18,7 +18,7 @@ add_library(SparseMatrix
     ${SOURCE_FILES}
     )
 
-add_executable(main apps/main.cpp)
-target_link_libraries(main SparseMatrix)
+add_executable(mtjc apps/mtjc.cpp)
+target_link_libraries(mtjc SparseMatrix)
 
  # target_link_libraries(sparse)
