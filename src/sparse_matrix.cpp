@@ -205,7 +205,7 @@ SparseMatrix::asPaddedSOAELLPACK(T zero, int modulo) {
   auto max_length = getMaxRowEntries();
   // and pad that out
   auto padded_length = max_length + (modulo - (max_length % modulo));
-  std::cout << "Max length: " << max_length << ", padded (by " << modulo
+  std::cerr << "Max length: " << max_length << ", padded (by " << modulo
             << "): " << padded_length << std::endl;
   // iterate over the rows and pad them out
   for (auto &idx_row : soaellmatrix.first) {

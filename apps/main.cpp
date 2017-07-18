@@ -14,17 +14,23 @@ int main(int argc, char *argv[])
 
   	const std::string input_filename = opt_input_file->get();
 
- 	std::cout << "input_filename " << input_filename << std::endl;
+ 	std::cerr << "Reading matrix file: " << input_filename << std::endl;
 
  	SparseMatrix matrix(input_filename);
 
- 	std::cout<<"Got "<<matrix.nonZeros()<<" edges"<<std::endl;
+ 	std::cerr<<"Found "<<matrix.nonZeros()<<" edges. "<<std::endl;
 
- 	// begin dumping json
+ 	// the number of vertices is the max of the height/width
+
+ 	int vertices = std::max(matrix.height(), matrix.width());
+
+ 	std::cerr<<"Found "<<vertices<<" vertices. "<<std::endl;
+
+ 	std::cerr<<"Writing json..."<<std::endl;
  	{
  		std::cout<<"{";
  		{
- 			// dump an array of nodes: 
+ 			std::cerr<<"Writing nodes..."<<std::endl;
  			std::cout<<"\"nodes\": [";
  			{
  				for(int i = 0;i<matrix.nonZeros(); i++){
@@ -36,7 +42,7 @@ int main(int argc, char *argv[])
  			}
  			std::cout<<"],";
 
- 			// dump an array of edges:
+ 			std::cerr<<"Writing edges..."<<std::endl;
  			std::cout<<"\"edges\": [";
  			{
  				// iterate over the non-zero matrix entries
@@ -57,7 +63,6 @@ int main(int argc, char *argv[])
  		std::cout<<"}";
  	}
  	std::cout<<std::endl;
-
-	/* code */ 
+ 	std::cerr<<"finished."<<std::endl;
 	return 0;
 }

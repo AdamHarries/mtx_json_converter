@@ -45,7 +45,7 @@ public:
   const std::string &getDesc() const { return _desc; }
 
   /// @brief Print a readable description of the argument for debug.
-  virtual void print(std::ostream &out = std::cout) const = 0;
+  virtual void print(std::ostream &out = std::cerr) const = 0;
 
   /**
    * Parse the argument. This is called whenever the option is present
@@ -188,13 +188,13 @@ public:
 
       // Oops, we didn't find a valid command for that...
       if (command == nullptr) {
-        cout << "Error: Invalid argument '" << argv[c] << "'." << std::endl;
+        cerr << "Error: Invalid argument '" << argv[c] << "'." << std::endl;
         help->setValue(true);
         break;
       }
       // Otherwise try to parse the arguments, and abort if it fails
       else if (!command->parseArgs(argc, c, argv)) {
-        cout << "Error: invalid argument for option " << command->getLong()
+        cerr << "Error: invalid argument for option " << command->getLong()
              << std::endl;
         help->setValue(true);
         break;
@@ -214,21 +214,21 @@ public:
               ->getLong()
               .length();
 
-      cout << "Usage:\n  " << argv[0] << " [OPTIONS]...\nDescription:\n  "
+      cerr << "Usage:\n  " << argv[0] << " [OPTIONS]...\nDescription:\n  "
            << desc << "\nOptions:\n";
       for (auto o : args) {
         if (o->getShort())
-          cout << "  -" << o->getShort();
+          cerr << "  -" << o->getShort();
         else
-          cout << "    ";
-        cout << "  --" << left << setw(max) << o->getLong() << "  "
+          cerr << "    ";
+        cerr << "  --" << left << setw(max) << o->getLong() << "  "
              << o->getDesc() << endl;
       }
       exit(0);
     }
   }
 
-  void print(std::ostream &out = std::cout) {
+  void print(std::ostream &out = std::cerr) {
     for (auto o : args) {
       out << o << std::endl;
     }
